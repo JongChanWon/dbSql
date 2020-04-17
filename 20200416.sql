@@ -151,6 +151,44 @@ WHERE hiredate >= TO_DATE('19820101', 'YYYYMMDD'); --('1982/01/01', '1982/01/01)
 hiredate에서 년도 표기 방식은 tool 때문에 2자리수로 표기됨
 이건 환경설정에서 4자리수로 변경 가능하다.
 
+<<<<<<< Updated upstream
 
    
    
+=======
+SELECT 에서 연산:
+    날짜 연산(+, -) : 날짜 + 정수, -정수 :  날짜에서 +- 정수를 한 과거 혹은 미래일자의 데이트 타입 반환
+    정수 연산(....) : 수업시간에 다루진 않음...
+    문자열 연산
+        리터럴 :  표기방법
+                숫자 리터럴 : 숫자로 표현
+                문자 리터럴 : java : "문자열" / sql : 'sql' 자바는 더블 sql은 싱글쿼테이션 으로 표현
+                            SELECT SELECT * FROM || table_name 
+                            SELECT 'SELECT * FROM' || table_name
+        문자열 결합연산 : + 가아니라 || (java 에서는 +)
+        날짜?? :  TO_DATE ('날짜문자열', '날짜 문자열에 대한 포맷')
+                 TO_DATE ('20200417', 'yyyymmdd')
+                 
+WHERE : 기술한 조건에 만족하는 행만 조회 되도록 제한;
+
+SELECT *
+FROM users
+WHERE userid = 'brown';
+
+                 
+SELECT *
+FROM users
+WHERE 1 = 1;
+
+SELECT *
+FROM users
+WHERE 1 = 2; -- 거짓이라 안됨
+
+SELECT *
+FROM users
+WHERE 1 != 1; -- 거짓이라 안됨
+
+
+
+                 
+>>>>>>> Stashed changes
