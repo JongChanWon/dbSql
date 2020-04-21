@@ -1,0 +1,3 @@
+GRANT CONNECT, RESOURCE TO won; --계정 만들때 썻던거
+
+GRANT CREATE VIEW TO won;
