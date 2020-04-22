@@ -123,6 +123,9 @@ SELECT *
 FROM dept;
 
 emp테이블에서 직원이 속한 부서번호가 30번 보다 큰(>) 부서에 속한 직원을 조회;
+SELECT *
+FROM emp
+WHERE deptno >= 30;
 
 SELECT *
 FROM emp
