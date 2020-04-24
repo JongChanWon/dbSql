@@ -181,7 +181,7 @@
  현재시간(SYSDATE) 시분초 단위까지 표현 ==> TO_CHAR를 이용하여 형변환
  SELECT TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS') now,
         TO_CHAR(SYSDATE, 'D') day,
-        TO_CHAR(SYSDATE-3, 'YYYY/MM/DD HH24:MI:SS') now_before3 --삼일전
+        TO_CHAR(SYSDATE-3, 'YYYY/MM/DD HH24:MI:SS') now_before3, --삼일전
         TO_CHAR(SYSDATE-1/24, 'YYYY/MM/DD HH24:MI:SS') now_before_hour --한시간전
         
  FROM dual;
@@ -224,8 +224,8 @@
  FROM dual;
  
  
- SELECT TO_DATE('201912', 'YYYYMM') param
- FORM dual;
+ SELECT TO_DATE(SYSDATE, 'YYYY-MM-DD') param
+ FROM dual;
  
  
  

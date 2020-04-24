@@ -62,12 +62,17 @@ ORDER BY ename DESC;
 
 RONUM :SELECT 순서대로 1번부터 차례대로 번호를 부여해주는 특수 KEYWORD
 
+EXPLAIN PLAN FOR
 SELECT ROWNUM, empno, ename
 FROM emp;
 
+SELECT *
+FROM TABLE(DBMS_XPLAN.DISPLAY);
+
+
 SELECT 절에 *표기하고 콤마를 통해 
 다른 표현(ex ROWNUM) 을 기술 할 경우
-*(아스테리) 앞에 어떤 테이블에 대한건지 테이블 명칭/별칭을 기술해야한다.
+*(아스테리) 앞에 어떤 테이블에 대한건지 테이블 명칭/별칭을 기술해야한다.;
 SELECT ROWNUM, emp.* --emp의 모든 컬럼을 조회
 FROM emp e;  --이렇게 하면 오류가 나는데 그이유는 e로 이름을 부여 했기 때문에 SELECT에서도 e로 바꿔줘야한다.
 같다
@@ -90,7 +95,7 @@ WHERE ROWNUM BETWEEN 1 AND 10;
 
 SELECT ROWNUM, empno, ename
 FROM emp
-WHERE ROWNUM BETWEEN 11 AND 20;
+WHERE  ROWNUM BETWEEN 11 AND 20;
 
 ROWNUM의 특징
 1. ORACLE 에만 존재
@@ -114,8 +119,11 @@ FROM emp
 ORDER BY ename;
 
 ROWNUM 은 ORDER BY 이전에 실행
-SELECT -> ROWNUM -> ORDER BY
+SELECT -> ROWNUM -> ORDER BY;
 
+SELECT ROWNUM, empno, ename
+FROM emp
+ORDER BY ename;
 ROWNUM의 실행순서에 의해 정렬이 된상태로 ROWNUM을 부여하려면 IN-LINE VIEW 를 사용해야 한다
 ** IN-LINE : 직접 기술을 했다
 
