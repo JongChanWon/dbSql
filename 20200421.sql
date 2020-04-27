@@ -51,7 +51,7 @@
   FROM emp
   
   WHERE LOWER(ename) = 'smith'; 이런식으로 작성하면 안된다
-  WHERE ename = UPPER('smith'); 두가지 방식중에는 위에보다는 아래방식이 올바르다.
+  WHERE ename = UPPER('smith'); 두가지 방식중에는 위에보다는 아래방식이 올바르다. --좌변을 가공해서는 안된다.(rule)
   
   
   WHERE ename = 'smith'; 테이블에는 데이터 값이 대문자로 저장되어 있으므로 조회건수 0
@@ -71,8 +71,8 @@
   --concat 함수로 작성하기
   ==> 'SELECT * FROM ' || table_name || ';',
   
-  SELECT CONCAT(CONCAT('SELECT * FROM',table_name),';')
-  FROM user_tables;
+  SELECT CONCAT(CONCAT('SELECT * FROM',empno),';') id
+  FROM emp;
   
   SUBSTR(문자열, 시작 인덱스, 종료 인덱스) : 문자열의 시작인덱스 부터.... 종료인덱스 까지의 부분 문자열
   시작인덱스는 1부터 (*java의 경우는 0부터)
@@ -87,12 +87,12 @@
   
   REPLACE(문자열, 검색할 문자열, 변경할 문자열) : 문자열에서 검색할 문자열 찾아 변경할 문자열 변경로 변경
   
-  SELECT SUBSTR('Hello, World', 1, 5) sub,
+  SELECT SUBSTR('Hello, World', 1, 8) sub,
          LENGTH('Hello, World') len,
          INSTR('Hello, World', 'o') ins,
          INSTR('Hello, World', 'o', 7) ins2, -- 처음 등장하는 o를 검색해서 처음부터 몇번째 있는지 나타내줌
          INSTR('Hello, World', 'o', INSTR('Hello, World', 'o')+1) ins3,
-         LPAD('hello', 15, '*') lp,
+         LPAD('hello', 15, 'a') lp,
          RPAD('hello', 15, '*') rp,
          LPAD('hello', 15) lp, --공백이 들어감
          RPAD('hello', 15) rp, --공백이 들어감
@@ -149,14 +149,16 @@
   문자 : ''
   날짜 : TO_DATE('날짜 문자열', '포맷')
  
- 
+ SELECT *
+ FROM emp
+ WHERE hiredate < TO_DATE('199001', 'YYYYMM');
  
  SELECT SYSDATE, SYSDATE +5 --5일 뒤 날짜가 나옴
  FROM dual;
   
  SELECT *
  FROM emp
- WHERE hiredate = TO_DATE('1980/12/17', 'YYYY/MM/DD');
+ WHERE hiredate = TO_DATE('1980/12/17', 'YYYY-MM-DD');
  
  fn1]
  SELECT TO_DATE('2019-12-31', 'YYYY/MM/DD') LASTDAY,
