@@ -14,7 +14,7 @@ ORDER BY 3;
 컬럼에다가 연산을 통해 새로운 컬럼을 만드는 경우
 SAL * DEPTNO SAL_DEPT
 
-SELECT empno, ename, sal, deptno, sal*deptno sal_dept
+SELECT empno, ename, sal, deptno, sal/deptno sal_dept
 FROM emp
 ORDER BY sal_dept;
 
