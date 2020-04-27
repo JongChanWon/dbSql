@@ -33,7 +33,7 @@ IN 연산자
 
 SELECT *
 FROM emp
-WHERE deptno IN (10, 30);
+WHERE deptno IN (10,30);
 ==> deptno 가 10이거나 30번인 직원
 deptno = 10 OR deptno = 30
 
@@ -47,15 +47,6 @@ FROM emp
 WHERE deptno = 10
 <<<<<<< Updated upstream
   AND deptno = 30; --두개를 만족
-   
-
-
-
-
-
-
-
-
   AND deptno = 30; --두개를 만족하는게 없어서 아무것도 나오지 않는다.
   
 SELECT userid  "아이디", usernm as "이름", alias as "별명"
@@ -78,11 +69,20 @@ WHERE userid IN ('brown', 'cony', 'sally');
 'co__' : co로 시작하고 뒤에 두개의 문자가 오는 문자열 --언더바 두개
 '_on_' : 가운데 두글자가 on이고 앞뒤로 어떤 문자열 이든지 하나의 문자가 올 수 있는 문자열
 
+SELECT *
+FROM emp
+WHERE ename LIKE '_MI%';
+
+웨어절에 컬럼명 쓰고 LIKE '_%문자열%_'; 이온다
 
 직원 이름(ename) 이 대문자 S로 시작하는 직원만 조회
 SELECT ename
 FROM emp
 WHERE ename LIKE 'S%';
+
+SELECT *
+FROM users
+WHERE userid LIKE 'b%';
 
 SELECT mem_id, mem_name
 FROM member
@@ -101,6 +101,10 @@ SQL 비교연산자 : =
 SELECT * 
 FROM emp
 WHERE mgr IS NULL;
+
+SELECT *
+FROM emp
+WHERE comm IS NOT NULL;
 
 값이 있는 상황에서 등가비교 : =, (!=, <>)
 NULL : IS NULL, IS NOT NULL -- 키워드
@@ -142,15 +146,19 @@ SELECT *
 FROM emp
 WHERE mgr NOT IN (7698, 7839, NULL);  --NULL은 equal 로 비교가 안됨
 
+SELECT *
+FROM emp
+WHERE mgr NOT IN(7698, NULL); --NULL은 IN, NOT IN 구문에서 비교가 안됨
+
 SELECT * 
 FROM emp
 WHERE mgr NOT IN (7698, 7839)
    OR mgr IS NULL; --NULL 값을 비교 할 때 따로 빼줘야함
 
-SELECT *
+SELECT * --잡이 세일즈맨이고 하이어데이트가 1981/06/01 보다 크고 셀러리가 1300보다 큰 사람들
 FROM emp
-WHERE job = 'SALESMAN'
-  AND hiredate >= TO_DATE(19810601) -- 데이터에서는 대소문자를 따진다.
+WHERE job = 'SALESMAN'  -- 데이터에서는 대소문자를 따진다.
+  AND hiredate >= TO_DATE(19810601) 
   AND sal > 1300;
   
 SELECT *
@@ -167,7 +175,7 @@ where 9]
 *부서가 10이 아니고 81년 6월 1일 이후 입사자 (not in 쓰고)  
 SELECT *
 FROM emp
-WHERE job NOT IN(10)
+WHERE deptno NOT IN(10)
   AND hiredate >= TO_DATE(19810601);
   
 SELECT *
@@ -186,14 +194,20 @@ where 11]
 SELECT *
 FROM emp
 WHERE job = 'SALESMAN'
-   OR hiredate >= TO_DATE(19810601);
+   OR hiredate >= TO_DATE(19810601)
+   AND job LIKE 'C%'
+ORDER BY job DESC, sal;
    
+ 세일즈맨이면서 6월1일 이상이고  c로 시작하는 데이터 순으로 내림차순
 where 12]
 
+EXPLAIN PLAN FOR;
 SELECT *
 FROM emp
 WHERE job = 'SALESMAN' 
    OR EMPNO LIKE '78__';  --타입이 number타입인데 문자로 표현했다,, 자동형변환이 이루어짐
+ SELECT *
+ FROM TABLE(DBMS_XPLAN.DISPLAY);
    
 where 13] -- DESC 디s스크라이브명령
 SELECT *
@@ -223,10 +237,23 @@ SQL 에서는 데이터를 정렬하려면 별도의 구문이 필요하다.
 ORDER BY 컬럼명[정렬형태], 컬럼명2[정렬형태], ... --정렬형태 생략 가능
 정렬의 형태 : 오름차순(DEFAULT)- ASC(오름차순은 기본이라 안해도됨), 내림차순 - DESC
 
+ORDER BY 를 쓸 때 주의할점은 정렬시키는 열의 기입 순서에 따라서 결과가 다르게 나올 수 있다.
+이는 각 열을 정렬 할 때, 어떤 열을 먼저 정렬하느냐로 결정된다.
+
+여기서 Tip으로 한가지 더 소개 할 수 있는데 위에서 계속 반복되는 열 이름이 귀찮을 것이다. 
+이때 ORDER BY 뒤에 숫자로 표시해도 된다.
+이 숫자는 SELECT 뒤에 기입된 열 위치이다
+
 직원 이름으로 오름차순 정렬
-SELECT *
+SELECT ename, job, mgr
 FROM emp
-ORDER BY ename ASC;
+ORDER BY 3,1;
+
+select절에서 기입한 순서대로 order by 에서 숫자로 쓸 수 있다
+ex) ename이 첫번째 이므로 order by 에 숫자로 1을 쓸 수 있다
+    job 이 첫번째면 1은 job이 된다
+
+
 
 직원 이름으로 내림차순 정렬
 SELECT *
