@@ -10,6 +10,9 @@ SELECT *
 FROM emp
 ORDER BY 3;
 
+SELECT comm
+FROM emp;
+WHERE ;
 별칭으로 정렬
 컬럼에다가 연산을 통해 새로운 컬럼을 만드는 경우
 SAL * DEPTNO SAL_DEPT
@@ -39,6 +42,12 @@ WHERE comm IS NOT NULL --NULL 비교는 결과값이 NULL 이기 때문에  굳이 안써도됨
   AND comm != 0
 WHERE = empno > 7300 AND  sal > 2000
 ORDER BY comm DESC, empno ASC ;
+
+select *
+from emp
+where comm is not null
+  and comm !=0
+ order by comm desc, empno ;
 
 SELECT *
 FROM emp
@@ -244,7 +253,39 @@ WHERE rn BETWEEN (:page-1 )* :pageSize + 1 AND :page * :pageSize;
        
        
        
-       
+ select *
+ from emp
+ where mgr is not null
+ order by job, empno desc;
+
+select *
+from emp
+where deptno IN(10,30)
+  and sal > 1500
+order by ename desc
+
+select rownum, empno, ename
+from emp;
+
+
+
+
+
+
+
+SELECT B.*
+FROM
+ (SELECT ROWNUM rn, a.*
+ FROM
+ (SELECT *
+  FROM emp
+  ORDER BY deptno, sal DESC) a)B
+  WHERE rn BETWEEN 11 AND 20;
+
+
+
+
+
 
 
 

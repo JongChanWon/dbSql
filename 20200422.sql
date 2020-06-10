@@ -26,6 +26,9 @@
  1. 위에서 아래로
     *단 자식 오퍼레이션이 있으면 자식부터 읽는다
     
+    실행계획을 보는 순서
+    
+    
     1 ==> 0번 순으로 읽는다
  Plan hash value: 3956160932
  
@@ -105,7 +108,7 @@ i18n
 
 000900
 0001000
-SELECT ename, sal, TO_CHAR(sal, 'L009,999.00')
+SELECT ename, sal, TO_CHAR(sal, 'L009,999.00') sal2
 FROM emp;
  
  NULL과 관련된 함수

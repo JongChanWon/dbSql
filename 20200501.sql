@@ -16,8 +16,6 @@ WHERE deptno = 10 OR deptno = 30
 WHERE deptno = (10,30) 하면 오류
 WHERE deptno IN (여러개의 행을 리턴하고, 하나의 컬럼으로 이루어진 쿼리)
 
-SMITH - 20, ALLEN은 30번 부서에 속함
-SMITH 또는 ALLEN이 속하는 부서의 조직원정보를 조회
 
 행이 여러개고, 컬럼은 하나다 
 ==> 서브쿼리에서 사용가능한 연산자 IN(많이씀, 중요), (ANY,ALL(빈도가 낮음))
@@ -30,7 +28,7 @@ ANY: 연산자를 만족하는 값이 하나라도 있을 때 TRUE
 ALL: 서브쿼리의 모든 값이 연산자를 만족 할 때 TRUE
      WHERE 컬럼|표현식 연산자 ANY(서브쿼리)
 
-SMITH와 ALLEN이 속한 부서에서 근무하는 모든 직원을 조회
+**SMITH와 ALLEN이 속한 부서에서 근무하는 모든 직원을 조회
 1. 서브쿼리를 사용하지 않을 경우 : 두개의 쿼리를 실행
 
 1-1] SMITH, ALLEN이 속한 부서의 부서번호를 확인하는 쿼리
@@ -172,6 +170,12 @@ SELECT dname
 FROM dept
 WHERE deptno = 10;
 
+
+SELECT empno, ename, e.deptno, dname 
+FROM emp e , dept d
+WHERE
+
+
 위의 쿼리를 스칼라 서브쿼리로 변경
 
 조인으로 구현
@@ -234,7 +238,7 @@ SELECT *
 FROM dept
 WHERE deptno NOT IN(SELECT deptno 
                     FROM emp
-                    WHERE emp.);
+                    WHERE deptno);
                     
 서브쿼리를 이용하여 IN연산자를 통해 일치하는 값이 있는지 조사할 때 
 값이 여러개 있어도 상관 없다(집합)
@@ -243,13 +247,13 @@ WHERE deptno = 10,
    OR deptno = 10, 
    OR deptno = 10;
 
-동일한 부서번호가 
 
 sub 5]
-SELECT *
+SELECT c.pid, p.pnm
 FROM cycle c, product p
-WHERE c.pid = p.pid NOT IN (SELECT *
-                            FROM cycle c, product p);
+WHERE c.pid = p.pid 
+  and c.cid=1 NOT IN (SELECT pnm
+                    FROM product);
 
 SELECT *
 FROM product
@@ -257,8 +261,9 @@ WHERE pid NOT IN
         (SELECT pid
          FROM cycle
          WHERE cid = 1); 
+         
 
-SELECT p.pid, pnm
+SELECT p.pid, p.pnm
 FROM product p
 WHERE cid = 1 NOT IN (SELECT p.pid, pnm
                       FROM cycle, product);
@@ -284,7 +289,7 @@ sub 7]
                   FROM cycle
                   WHERE cid = 2);
                   
-***스칼라 서브쿼리르 이용한 방법 - 서브쿼리만 6번 실행이 된다 (셀렉트절에 괄호) --조인을 이용하는게 더 선호하는 방법이다.
+***스칼라 서브쿼리를 이용한 방법 - 서브쿼리만 6번 실행이 된다 (셀렉트절에 괄호) --조인을 이용하는게 더 선호하는 방법이다.
  SELECT cid, (SELECT cnm FROM customer WHERE cid = cycle.cid) cnm,
         pid, (SELECT pnm FROM product  WHERE pid = cycle.pid) pnm, day, cnt
  FROM cycle
@@ -293,7 +298,9 @@ sub 7]
                FROM cycle
                WHERE cid = 2);
  
- 
+ select pnm 
+ from product
+ where cid = cycle.cid;
  
  
  

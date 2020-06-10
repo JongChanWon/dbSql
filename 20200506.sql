@@ -33,8 +33,8 @@ dept 테이블에 deptno 99, dname DDIT, loc daejeon 값을 입력하는 INSERT 구문 작성
 SELECT *
 FROM dept;
 
-INSERT INTO dept VALUES (99,'DDIT', 'daejeon');
-INSERT INTO dept (loc, deptno, dname) VALUES ('daejeon', 99, 'DDIT');
+INSERT INTO dept VALUES (99,'ddit', 'daejeon');
+INSERT INTO dept (loc, deptno) VALUES ('daejeon', 99);
 데이터를 확정 지으려면 : commit - 트랜잭션 완료
 데이터 입력을 취소 하려면: rollback - 트랜잭션 취소
 rollback;
@@ -44,15 +44,20 @@ INSERT 구문에서 스칼라 서브쿼리, 함수도 사용 가능
 EX: 테이블에 데이터가 들어갈 당시의 일시정보 기록 하는 경우가 많음 ==> SYSDATE
 
 SELECT *
-FROM emp;
+FROM dept;
 
 emp 테이블의 경우 컬럼 총 개수는 8개, NOT NULL 은 1개(EMPNO)
 
 empno 가 9999이고 ename은 본인 이름, hiredate는 현재 일시를 저장하는 INSERT 구문을 작성
 INSERT INTO emp (empno, ename, hiredate) VALUES (9999, 'jc', SYSDATE);
+ROLLBACK;
 
 9998번 사번으로 jw 사원을 입력, 입사일자는 2020년 4월 13일로 설정하여 데이터 입력
 INSERT INTO emp (empno, ename, hiredate, comm) VALUES (9998, 'JW', TO_DATE('2020/04/13', 'YYYY/MM/DD'), 300);
+
+
+INSERT INTO emp (empno, ename, hiredate, comm) VALUES ( 1111, 'JC', SYSDATE, 5000);
+
 
 INSERT 절에 기술하지 않은 컬럼들은 값이 NULL 로 입력된다.
 
@@ -86,7 +91,6 @@ SELECT *
 FROM dept;
 
 99번 부서의 부서명을 대덕 IT로, 위치를 영민빌딩으로 변경
-
 UPDATE dept SET dname = '대덕IT',
                 loc = '영민빌딩'
 WHERE deptno = 99;
@@ -243,16 +247,27 @@ INSERT INTO 게시글 첨부파일 테이블 (첨부파일명, 첨부파일 사이즈) values (......)
 
 
 
+UPDATE emp SET empno = (SELECT empno FROM emp WHERE empno LIKE '7___')
+WHERE empno = '7777';
+
+
+SELECT *
+FROM emp
+WHERE empno LIKE '7___';
+
+
+INSERT INTO emp VALUES (7777, 'BROWN', 'SALSEMAN');
+
+UPDATE emp SET deptno = (SELECT deptno FROM emp WHERE ename = 'SMITH') ,
+               job = (SELECT job FROM emp WHERE ename = 'SMITH'),
+               sal = (SELECT sal FROM emp WHERE ename = 'SMITH'),
+               comm = (SELECT comm FROM emp WHERE ename = 'SMITH')
+WHERE empno = 9999;
 
 
 
-
-
-
-
-
-
-
+select *
+from emp;
 
 
 

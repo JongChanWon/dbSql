@@ -79,7 +79,7 @@
  FROM cycle;
  
  JOIN 4]
- SELECT customer.CID, customer.cnm, CYCLE.pid, CYCLE.DAY,CYCLE.cnt 
+ SELECT customer.cid, customer.cnm, CYCLE.pid, DAY, CYCLE.cnt 
  FROM customer, cycle
  WHERE customer.cid = cycle.cid
    AND customer.cnm IN('brown','sally');
@@ -134,6 +134,9 @@ WHERE cycle.pid = product.pid
  
 
 join 8~13 >>>과제!! 틀린문제도,,ㅇㅇ
+
+
+
  
  
  

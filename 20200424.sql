@@ -37,7 +37,7 @@ NULL 처리 하는 방법 (4가지 중에 본인 편한걸로 하나 이상은 기억)
  
  부서별로 가장 높은 급여 값
  
- SELECT deptno, MAX(sal)
+ SELECT deptno, MIN(empno)
  FROM emp
  GROUP BY deptno;
  
@@ -187,13 +187,29 @@ SELECT deptno,  DECODE(deptno, 10, 'ACCOUNTING',
  FROM dept
  GROUP BY deptno;
  
- SELECT COUNT(*)
+ SELECT COUNT(*) cnt
  FROM dept;
+ 
+ grp7]
+ 
+ SELECT COUNT(*) cnt /* 이걸 카운트 하면 하나 나옴*/
+ FROM
+ (SELECT COUNT(*) cnt
+  FROM 
+      (SELECT deptno  /*deptno 컬럼이 1개 존재, row는 3개인 테이블 */
+       FROM emp
+       GROUP BY deptno));
+ 
+ dept 테이블을 확인하려면 총 4개의 부서 정보가 존재 -> 회사내에 존재하는 모든 부서정보
+ emp 테이블에서 관리되는 직원들이 실제 속한 부서정보의 개수 -> 10, 20 , 30 --> 3ro
  
  SELECT TO_CHAR(hiredate,'yyyy')cnt
  FROM emp
  GROUP BY deptno,hiredate;
  
+ 
+ SELECT *
+ FROM prod;
  
  
  

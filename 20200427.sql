@@ -165,5 +165,13 @@ WHERE a.deptno = b.deptno
  
  join 3~4 번, 데이터 결합 join1번 풀기
  
+ join3]
+ 
+ SELECT empno, ename, sal, deptno, dname
+ FROM emp, dept
+ WHERE emp.deptno = dept.deptno
+   AND sal> 2500
+   AND empno > 7600
+ 
  
  

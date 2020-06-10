@@ -124,10 +124,11 @@
  FROM product p LEFT OUTER JOIN cycle c ON ( p.pid = c.pid
  WHERE;
  
+ 아우터 조인 오라클버전
  SELECT p.pid, pnm, 1 cid, NVL(day,0)day, NVL(cnt,0)cnt
  FROM cycle c, product p
  WHERE c.pid(+) = p.pid
-   AND cid(+) = 1; 
+ AND cid(+) = 1; 
  
  SELECT p.pid, pnm, 1 cid, NVL(day,0)day, NVL(cnt,0)cnt
  FROM 
@@ -140,6 +141,12 @@
  SELECT product.pid, product.pnm, 1 cid, NVL(cycle.day, 0), NVL(cycle.cnt,0)cnt
  FROM product LEFT OUTER JOIN cycle ON (product.pid = cycle.pid AND cycle.cid=1)
                          JOIN customer ON (customer name = 'brown');
+                         
+ JOIN 5]
+ 
+ SELECT *
+ FROM cycle, product, customer
+ WHERE 
                          
  SELECT m.empno,m.ename, e.empno, e.ename 
  FROM emp e, emp m
@@ -218,8 +225,7 @@ SMITH가 속한 부서에 속한 직원들은 누가 있을까?
  FROM emp
  WHERE deptno = 20;
  
- 서브쿼리를 통한 쿼리 통합
- 
+ 서브쿼리를 통한 쿼리 통합 
  SELECT *
  FROM emp
  WHERE deptno = (SELECT deptno     --20
@@ -232,9 +238,9 @@ SMITH가 속한 부서에 속한 직원들은 누가 있을까?
                 FROM emp
                 WHERE ename = :ename); -- :ename 을 해서 인라인뷰 화 할 수 있다,, 자바와 연결할때 
    
- SELECT *
  
- SELECT AVG(sal)
+ 
+ SELECT ROUND(AVG(sal), 2)
  FROM emp;
  
  SUB 1]

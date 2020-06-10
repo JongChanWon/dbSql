@@ -34,10 +34,13 @@ Plan hash value: 1116584662
 -----------------------------------------------------------------------------------
 
 
-INDEX 실습
+INDEX 실습 --제약 조건 삭제할때 ALTER TABLE 테이블 명 DROP CONSTRAINT pk_emp(제약조건);
 emp 테이블에 어제 생성한 pk_emp PRIMARY KEY 제약조건을 삭제
 ALTER TABLE emp DROP CONSTRAINT pk_emp; (index 도 삭제)
-
+EXPLAIN PLAN FOR
+select *
+from emp
+where empno = 7782;
 1. 인덱스 없이 empno 값을 이용하여 데이터 조회
 EXPLAIN PLAN FOR
 SELECT *

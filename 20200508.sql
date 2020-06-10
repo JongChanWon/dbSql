@@ -29,7 +29,7 @@ INSERT INTO dept_test VALUES (99, '', 'daejeon');
 
 UNIQUE 제약
 해당 컬럼에 동일한 값이 중복되지 않도록 제한
-테이블의 모든행중 해당 컬럼에 값은 유일
+테이블의 모든행중 해당 컬럼의 값은 유일
 EX: 직원 테이블의 사번 컬럼, 학생 테이블의 학번 컬럼
 
 DROP TABLE dept_test;
@@ -154,7 +154,7 @@ dept_test 테이블의 99번 부서의 데이터를 지우면 어떻게 될까?
 정상적으로 삭제 할 수 없다
 DELETE dept_test
 WHERE deptno = 99;
-
+==> 자식레코드가 있는 부모레코드는 삭제 불가(무결성이 깨지기 때문에)
 
 참조키와 관련된 데이터를 삭제시 부여할 수 있는 옵션
 
@@ -171,6 +171,7 @@ FOREIGN KEY 옵션에 따라 자식 데이터를 처리할 수 있는 옵션
     (java 코드 + 테이블 내역 확인 필요) 
     java 코드에는 dept 테이블만 삭제하는 코드가 있는데
     신기하게도 emp 테이블의 데이터가 삭제되거나 null 로 설정될 경우를 볼 수 있음
+    --부모데이터가 삭제 되었기 때문에 자식데이터가 NULL로 설정되어서,, 아닌가..
     
     
     
@@ -189,9 +190,11 @@ CREATE TABLE emp_test (
     sal NUMBER(7,2) CHECK (sal > 0),
     deptno NUMBER(2,0) REFERENCES dept_test (deptno)
 );
-    
 
 INSERT INTO emp_test VALUES (9999, 'brown', 1000, 99);
+DESC emp_test;
+SELECT *
+FROM emp_test;
 
 sal컬럼에 설정된 check 제약조건 (sal > 0) 에 의해 정상적으로 실행되지 않는다
 INSERT INTO emp_test VALUES (9998, 'sally', -1000, 99);
@@ -234,6 +237,15 @@ dept_test 테이블을 복사 ==> dept_test_copy
 CREATE TABLE dept_test_copy AS
 SELECT *
 FROM dept_test;
+
+CREATE TABLE dept_test_copy AS
+SELECT *
+FROM dept_test;
+
+
+select *
+from dept_test_copy
+
 
 데이터 없이 테이블을 복사 하고 싶을 때 
 CREATE TABLE dept_test_copy2 AS
@@ -321,11 +333,13 @@ DESC emp_test;
 *emp_test 테이블이 hp 컬럼(VARCHAR2(20)) 을 신규로 추가
 ALTER TABLE 테이블명 ADD (컬럼명 컬럼타입);
 
-ALTER TABLE emp_test ADD (hp VARCHAR2(20));
+ALTER TABLE emp_test ADD (mp VARCHAR2(30);
+
+ALTER TABLE dept_test ADD (hp VARCHAR2(20));
 위에서 한 변경사항 확인
 SELECT *
-FROM emp_test;
-
+FROM dept_test;
+ 
 DESC emp_test;
 
 컬럼 사이즈, 타입 변경 --사이즈는 늘릴 수는 있지만 줄일 수는 없다
@@ -336,7 +350,12 @@ ALTER TABLE 테이블명 MODIFY(컬럼명 컬럼타입);
 ALTER TABLE emp_test MODIFY (hp VARCHAR2(30));
 위에서 한 변경사항 확인
 SELECT *
+FROM dept_test;
+INSERT INTO dept_test VALUES ('풀피');
+
+SELECT *
 FROM emp_test;
+
 
 DESC emp_test;
 
@@ -368,6 +387,7 @@ FROM emp_test;
 DESC emp_test;
 
 컬럼 삭제
+ALTER TABLE dept_test DROP hp_n;
 ALTER TABLE 테이블명 DROP (삭제할 컬럼명)
 ALTER TABLE 테이블명 DROP COLUMN (삭제할 컬럼명)
 
@@ -375,6 +395,10 @@ ALTER TABLE 테이블명 DROP COLUMN (삭제할 컬럼명)
 ALTER TABLE emp_test DROP (hp_n);
 ALTER TABLE emp_test DROP COLUMN(hp_n); --괄호 해도되고 안해도됨
 
+ALTER TABLE dept_test DROP COLUMN hp;
+ALTER TABLE dept_test ADD (hp VARCHAR(20);
+SELECT *
+FROM dept_test;
 SQL 종류
 DML: SELECT, INSERT, UPDATE, DELETE ==> 트랜잭션 제어가능
 DDL: CREATE..., ALTER... ==> 트랜잭션 제어 불가능 (취소가 안된다) --조심!!

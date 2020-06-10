@@ -20,7 +20,7 @@
  else
      return expr1
      
- SELECT empno, ename, sal, NULLIF(sal, 3000)
+ SELECT empno, ename, sal, NULLIF(sal, 800)
  FROM emp;
  
  가변인자: 함수의 인자의 갯수가 정해져 있지 않음
@@ -77,6 +77,15 @@
              WHEN job = 'PRESIDENT' THEN sal *1.20
              ELSE sal * 1 
         END bonus
+ FROM emp;
+ 
+ SELECT empno, ename, job, sal,comm,
+        CASE
+            WHEN job = 'SALESMAN' THEN sal/4
+            WHEN job = 'MANAGER' THEN comm/2
+            WHEN empno > 7800 THEN comm * 3
+            ELSE empno
+        END bon
  FROM emp;
  
  SELECT empno, ename, job, deptno,
@@ -145,6 +154,7 @@
     홀수데이트면 비대상자 짝수면은 대상자
  MOD 연산시 나머지 값은 제수보다 클수가 없다.
  MOD
+ 
  cond 2]   
  SELECT empno, ename, hiredate, 
         MOD(TO_CHAR(SYSDATE, 'YYYY'), 2) ,
